@@ -1,0 +1,43 @@
+services:
+  dashboard:
+    build: ./dashboard
+    container_name: miner-dashboard
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  api:
+    build: ./api
+    container_name: miner-api
+    ports:
+      - "4000:4000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+
+  miner1:
+    image: rangermix/twitch-drops-miner:latest
+    container_name: miner1
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./miner1/data:/app/data
+    restart: unless-stopped
+
+  miner2:
+    image: rangermix/twitch-drops-miner:latest
+    container_name: miner2
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./miner2/data:/app/data
+    restart: unless-stopped
+
+  miner3:
+    image: rangermix/twitch-drops-miner:latest
+    container_name: miner3
+    ports:
+      - "8083:8080"
+    volumes:
+      - ./miner3/data:/app/data
+    restart: unless-stopped
